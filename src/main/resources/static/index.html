@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC Video Chat</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>WebRTC Video Chat</h1>
+            <p>
+                A real-time peer-to-peer video call using WebRTC.
+                Open two browser tabs, enter the same Room ID, and click Join to start a call.
+                Watch the status panel to see the WebRTC handshake happen step by step.
+            </p>
+        </header>
+
+        <!-- Video Area -->
+        <div class="video-section">
+            <div class="video-container">
+                <span class="label">You (Local)</span>
+                <video id="localVideo" autoplay playsinline muted></video>
+            </div>
+            <div class="video-container">
+                <span class="label">Peer (Remote)</span>
+                <video id="remoteVideo" autoplay playsinline></video>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <input type="text" id="roomInput" placeholder="Enter Room ID (e.g. my-room)" />
+            <button class="btn btn-join" id="joinBtn" onclick="joinRoom()">Join Room</button>
+            <button class="btn btn-hangup" id="hangupBtn" onclick="hangUp()" disabled>Hang Up</button>
+        </div>
+
+        <!-- Connection Status Panel -->
+        <div class="status-section">
+            <h2>Connection Status</h2>
+            <div class="status-panel" id="statusPanel">
+                <div class="log-entry info">
+                    <span class="timestamp">[--:--:--]</span>Ready. Enter a Room ID and click Join to start.
+                </div>
+            </div>
+        </div>
+
+        <!-- Explainer Section -->
+        <div class="explainer">
+            <h2>What just happened?</h2>
+            <p>
+                WebRTC (Web Real-Time Communication) allows browsers to send video and audio
+                directly to each other without going through a server. But first, the two browsers
+                need to "find" each other — that's where the <strong>Signaling Server</strong> comes in.
+            </p>
+            <p>
+                The signaling server (this Spring Boot app) only helps with the initial handshake.
+                Once the connection is established, video and audio flow directly between browsers (P2P).
+                The server never sees your video data.
+            </p>
+            <div class="flow-diagram"><span class="peer-color">  You (Browser A)</span>          <span class="server-color">Signaling Server</span>          <span class="peer-color">Peer (Browser B)</span>
+       |                          |                          |
+  <span class="highlight">1.</span>  |---- join(room) --------->|                          |
+       |<--- waiting -------------|                          |
+       |                          |<------- join(room) ------|
+       |<--- ready ---------------|---------- ready -------->|
+       |                          |                          |
+  <span class="highlight">2.</span>  |---- offer (SDP) -------->|---------- offer -------->|
+       |                          |                          |
+  <span class="highlight">3.</span>  |                          |<-------- answer (SDP) ---|
+       |<--- answer --------------|                          |
+       |                          |                          |
+  <span class="highlight">4.</span>  |---- ICE candidate ------>|---- ICE candidate ------>|
+       |<--- ICE candidate -------|<--- ICE candidate -------|
+       |                          |                          |
+  <span class="success-color">5.</span>  <span class="success-color">|========= Direct P2P Connection Established! =========|</span>
+       <span class="success-color">|<=========== Video / Audio (no server) =============>|</span></div>
+            <p style="margin-top: 16px;">
+                <strong>SDP (Session Description Protocol)</strong> describes media capabilities:
+                codecs, encryption keys, and network information.<br>
+                <strong>ICE (Interactive Connectivity Establishment)</strong> finds the best network path:
+                it tries direct LAN, then STUN (to discover public IP), then TURN (relay) as a fallback.
+            </p>
+        </div>
+    </div>
+
+    <script src="/js/webrtc.js"></script>
+</body>
+</html>

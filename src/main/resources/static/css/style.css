@@ -1,0 +1,296 @@
+/* ===================================================================
+   WebRTC Video Chat — Dark Theme
+   =================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+/* --- Layout --- */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* --- Header --- */
+
+header {
+    text-align: center;
+    padding: 24px 0 16px;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #e94560;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #8892a4;
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+/* --- Video Area --- */
+
+.video-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+}
+
+.video-container {
+    background: #16213e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.video-container .label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    z-index: 1;
+    backdrop-filter: blur(4px);
+}
+
+.video-container video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    background: #0a0a1a;
+}
+
+/* --- Controls --- */
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background: #16213e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 24px;
+}
+
+.controls input {
+    padding: 10px 16px;
+    border: 2px solid #0f3460;
+    border-radius: 8px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    width: 220px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.controls input:focus {
+    border-color: #e94560;
+}
+
+.controls input::placeholder {
+    color: #555;
+}
+
+.btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn-join {
+    background: #e94560;
+    color: #fff;
+}
+
+.btn-join:hover {
+    background: #d63851;
+}
+
+.btn-join:disabled {
+    background: #5a2030;
+    cursor: not-allowed;
+}
+
+.btn-hangup {
+    background: #0f3460;
+    color: #fff;
+}
+
+.btn-hangup:hover {
+    background: #1a4a80;
+}
+
+.btn-hangup:disabled {
+    background: #0a1e3a;
+    color: #555;
+    cursor: not-allowed;
+}
+
+/* --- Status Panel (Terminal-style) --- */
+
+.status-section {
+    margin-bottom: 24px;
+}
+
+.status-section h2 {
+    font-size: 1.1rem;
+    color: #e94560;
+    margin-bottom: 12px;
+}
+
+.status-panel {
+    background: #0d1117;
+    border: 1px solid #1e2a3a;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    max-height: 240px;
+    overflow-y: auto;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.status-panel .log-entry {
+    color: #3fb950;
+}
+
+.status-panel .log-entry.error {
+    color: #f85149;
+}
+
+.status-panel .log-entry.info {
+    color: #58a6ff;
+}
+
+.status-panel .log-entry.warn {
+    color: #d29922;
+}
+
+.status-panel .log-entry .timestamp {
+    color: #6e7681;
+    margin-right: 8px;
+}
+
+/* --- Explainer Section --- */
+
+.explainer {
+    background: #16213e;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 24px;
+}
+
+.explainer h2 {
+    font-size: 1.3rem;
+    color: #e94560;
+    margin-bottom: 16px;
+}
+
+.explainer p {
+    color: #8892a4;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.flow-diagram {
+    background: #0d1117;
+    border: 1px solid #1e2a3a;
+    border-radius: 8px;
+    padding: 20px 24px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: #8b949e;
+    overflow-x: auto;
+    white-space: pre;
+}
+
+.flow-diagram .highlight {
+    color: #e94560;
+    font-weight: bold;
+}
+
+.flow-diagram .peer-color {
+    color: #58a6ff;
+}
+
+.flow-diagram .server-color {
+    color: #d29922;
+}
+
+.flow-diagram .success-color {
+    color: #3fb950;
+}
+
+/* --- Scrollbar --- */
+
+.status-panel::-webkit-scrollbar,
+.flow-diagram::-webkit-scrollbar {
+    width: 6px;
+}
+
+.status-panel::-webkit-scrollbar-track,
+.flow-diagram::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.status-panel::-webkit-scrollbar-thumb,
+.flow-diagram::-webkit-scrollbar-thumb {
+    background: #2a3a4a;
+    border-radius: 3px;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 768px) {
+    .video-section {
+        grid-template-columns: 1fr;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .controls input {
+        width: 100%;
+    }
+
+    .flow-diagram {
+        font-size: 0.7rem;
+    }
+}
