@@ -46,39 +46,7 @@ WebRTC (P2P 직접 연결):
 
 ## 연결 과정 (5단계)
 
-```mermaid
-sequenceDiagram
-    participant A as Browser A
-    participant S as Signaling Server<br/>(Spring Boot WebSocket)
-    participant B as Browser B
-
-    Note over S: 서버는 "소개팅 주선자" 역할만 한다
-
-    A->>S: 1. join(roomId: "abc")
-    B->>S: 1. join(roomId: "abc")
-    S->>A: ready (상대방 입장)
-    S->>B: ready (상대방 입장)
-
-    Note over A: 2. SDP Offer 생성<br/>"나는 H.264 코덱 지원하고<br/>해상도 1280x720 가능해"
-    A->>S: offer(SDP)
-    S->>B: offer(SDP) [그대로 전달]
-
-    Note over B: 3. SDP Answer 생성<br/>"나도 H.264 되고<br/>720p OK"
-    B->>S: answer(SDP)
-    S->>A: answer(SDP) [그대로 전달]
-
-    Note over A,B: 4. ICE Candidates 교환<br/>"내 IP는 192.168.1.5야"<br/>"내 공인 IP는 203.x.x.x야"
-    A->>S: ice-candidate
-    S->>B: ice-candidate [전달]
-    B->>S: ice-candidate
-    S->>A: ice-candidate [전달]
-
-    Note over A,B: 5. P2P 연결 수립!<br/>이제 서버 없이 직접 통신
-
-    A<-->B: 영상/음성 직접 전송 (SRTP 암호화)
-
-    Note over S: 서버는 영상 데이터를<br/>절대 보지 않는다
-```
+![WebRTC Signaling](docs/images/webrtc-signaling.png)
 
 ### 각 단계 상세 설명
 

@@ -1,0 +1,37 @@
+direction: right
+
+A: "Browser A" {
+  style.fill: "#1a1a2e"
+  style.font-color: "#ffffff"
+}
+S: "Signaling Server\n(Spring Boot WebSocket)" {
+  style.fill: "#533483"
+  style.font-color: "#ffffff"
+}
+B: "Browser B" {
+  style.fill: "#1a1a2e"
+  style.font-color: "#ffffff"
+}
+
+# Step 1: Join
+A -> S: "1. join(roomId: \"abc\")" {style.stroke: "#53bf9d"}
+B -> S: "1. join(roomId: \"abc\")" {style.stroke: "#53bf9d"}
+S -> A: "ready (peer joined)" {style.stroke: "#53bf9d"; style.stroke-dash: 3}
+S -> B: "ready (peer joined)" {style.stroke: "#53bf9d"; style.stroke-dash: 3}
+
+# Step 2: SDP Offer
+A -> S: "2. offer(SDP)\n\"I support H.264,\n1280x720\"" {style.stroke: "#f0a500"}
+S -> B: "2. offer(SDP)\n[relay as-is]" {style.stroke: "#f0a500"}
+
+# Step 3: SDP Answer
+B -> S: "3. answer(SDP)\n\"H.264 OK, 720p OK\"" {style.stroke: "#e94560"}
+S -> A: "3. answer(SDP)\n[relay as-is]" {style.stroke: "#e94560"}
+
+# Step 4: ICE Candidates
+A -> S: "4. ice-candidate\n\"My IP: 192.168.1.5\"" {style.stroke: "#0f3460"}
+S -> B: "4. ice-candidate [relay]" {style.stroke: "#0f3460"}
+B -> S: "4. ice-candidate\n\"My public IP: 203.x.x.x\"" {style.stroke: "#0f3460"}
+S -> A: "4. ice-candidate [relay]" {style.stroke: "#0f3460"}
+
+# Step 5: P2P
+A -> B: "5. P2P Connected!\nVideo/Audio direct (SRTP encrypted)\nServer never sees media data" {style.stroke: "#53bf9d"; style.stroke-width: 3}
